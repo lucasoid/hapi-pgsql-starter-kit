@@ -1,0 +1,32 @@
+{
+  "name": "hapi-pgsql-starter-kit",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "lab",
+    "start-dev": "cross-env NODE_ENV=development nodemon app/server.js",
+    "start": "node app/server.js",
+    "migrate": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback",
+    "migrate:make": "knex migrate:make",
+    "seed": "knex seed:run",
+    "seed:make": "knex seed:make"
+  },
+  "author": "Ben Lucas",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "hapi": "^17.5.4",
+    "hapi-auth-jwt2": "^8.1.0",
+    "jsonwebtoken": "^8.3.0",
+    "knex": "^0.15.2",
+    "objection": "^1.3.0",
+    "pg": "^7.4.3"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "lab": "^16.1.0",
+    "nodemon": "^1.18.4"
+  }
+}
