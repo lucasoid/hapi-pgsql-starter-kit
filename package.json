@@ -25,6 +25,7 @@
     "pg": "^7.4.3"
   },
   "devDependencies": {
+    "code": "^5.2.0",
     "cross-env": "^5.2.0",
     "lab": "^16.1.0",
     "nodemon": "^1.18.4"

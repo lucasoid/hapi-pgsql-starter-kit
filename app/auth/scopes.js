@@ -40,14 +40,23 @@ exports.fetchScopes = (options) => async (request, h) => {
  * @param {Object} options
  * @param {Array} options.getRequiredScopes - accessor fn `(request) => requiredScopes`
  * @param {string} options.getUserScopes - accessor fn `(request) => userScopes`
- * @param {number} options.getOrgId - accessor fn `(request) => orgId`
  * @param {boolean} [options.matchAll] - defaults to false
  * @returns {boolean|Boom}
  */
-exports.validateScopes = (options) => async (request, h) => {
+exports.validateScopes = (options) => (request, h) => {
+
+    if(typeof options.getRequiredScopes !== 'function') {
+        request.log(['error', 'auth', 'scopes'], 'getRequiredScopes is not a function');
+        return Boom.internal();
+    }
+
+    if(typeof options.getUserScopes !== 'function') {
+        request.log(['error', 'auth', 'scopes'], 'getUserScopes is not a function');
+        return Boom.internal();
+    }
     
     const dedupe = arr => arr.filter((el, i) => arr.indexOf(el) === i);
-
+    
     this.requiredScopes = dedupe(options.getRequiredScopes(request));
     this.userScopes = dedupe(options.getUserScopes(request));
     this.matchAll = options.matchAll || false;
