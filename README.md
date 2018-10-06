@@ -1,6 +1,6 @@
-# HAPI PostgreSQL Starter Kit
+# hapi + PostgreSQL starter kit
 
-Sample API using PostgreSQL, Hapi, and JWT auth. Supports:
+Sample API using PostgreSQL, hapi, and JWT auth. Supports:
 * multi-tenancy
 * user-defined access levels per tenant
 * JWT-based auth (assumes there is a third-party auth server)
@@ -28,4 +28,12 @@ npm run migrate:latest
 npm run migrate:rollback
 npm run seed:make -- filename
 npm run seed
+```
+
+## Tests
+
+Uses hapijs/lab for unit tests. Run with:
+```
+npm test
+npm test -- test/path/filename.js
 ```
