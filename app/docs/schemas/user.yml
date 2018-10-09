@@ -1,0 +1,19 @@
+description: product
+type: object
+required:
+  - firstName
+  - lastName
+  - email
+properties:
+  id:
+    type: string
+    example: 2531329f-fb09-4ef7-887e-84e648214436
+  firstName:
+    type: string
+    example: Oliver
+  lastName:
+    type: string
+    example: Holmes
+  email:
+    type: string
+    example: owholmes@scotus.com

@@ -1,0 +1,13 @@
+description: organization
+type: object
+required:
+  - name
+properties:
+  id:
+    type: string
+    example: 2531329f-fb09-4ef7-887e-84e648214436
+  name:
+    type: string
+    example: 'XYZ Inc.'
+  settings:
+    type: object

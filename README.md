@@ -6,6 +6,8 @@ Sample API using PostgreSQL, hapi, and JWT auth. Supports:
 * JWT-based auth (assumes there is a third-party auth server)
 * database migrations using Knex
 * database models and queries using Objection.js
+* unit tests using Lab
+* OpenAPI documentation
 
 # Auth
 
@@ -30,10 +32,14 @@ npm run seed:make -- filename
 npm run seed
 ```
 
-## Tests
+# Tests
 
 Uses hapijs/lab for unit tests. Run with:
 ```
 npm test
 npm test -- test/path/filename.js
 ```
+
+# Docs
+
+Provides docs according to the OpenApi spec. Access them at /docs.json or /docs.yml.

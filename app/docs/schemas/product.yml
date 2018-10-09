@@ -1,0 +1,21 @@
+description: product
+type: object
+required:
+  - orgId
+  - name
+properties:
+  id:
+    type: string
+    example: 2531329f-fb09-4ef7-887e-84e648214436
+  orgId:
+    type: string
+    example: 2531329f-fb09-4ef7-887e-84e648214436
+  name:
+    type: string
+    example: Fun-Pak
+  description:
+    type: string
+    example: Assortment of widgets
+  cost:
+    type: number
+    example: 21.99

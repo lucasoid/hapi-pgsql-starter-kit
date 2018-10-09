@@ -1,0 +1,9 @@
+description: item deleted
+content:
+  application/json:
+    schema:
+      properties:
+        deleted:
+          type: number
+          description: count of deleted items
+          example: 1

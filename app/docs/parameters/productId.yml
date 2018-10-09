@@ -1,0 +1,8 @@
+name: productId
+in: path
+required: true
+description: the ID of the product
+schema:
+  type: string
+  format: uuid
+  example: 148ac505-7144-4b33-87ce-4cf8bccb8861
