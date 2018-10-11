@@ -4,7 +4,7 @@ const lab = exports.lab = Lab.script();
 const { validateScopes } = require('../../app/auth/scopes');
 
 lab.suite('scopes', () => {
-    lab.test('validateScopes returns true if no required scopes are provided', () => {
+    lab.test('validateScopes returns true if no required scopes are provided', { plan: 1 }, () => {
         let request = {};
         let result = validateScopes({
             getRequiredScopes: (request) => [],
@@ -14,7 +14,7 @@ lab.suite('scopes', () => {
         expect(result).to.be.true();
     });
 
-    lab.test('validateScopes returns true if one of the user scopes match one of the required scopes', () => {
+    lab.test('validateScopes returns true if one of the user scopes match one of the required scopes', { plan: 1 }, () => {
         let request = {};
         let result = validateScopes({
             getRequiredScopes: (request) => ['a', 'b', 'c', 'd'],
@@ -24,7 +24,7 @@ lab.suite('scopes', () => {
         expect(result).to.be.true();
     });
 
-    lab.test('validateScopes returns false if none of the user scopes match any of the required scopes', () => {
+    lab.test('validateScopes returns false if none of the user scopes match any of the required scopes', { plan: 1 }, () => {
         let request = {};
         let result = validateScopes({
             getRequiredScopes: (request) => ['a', 'b', 'c', 'd'],
@@ -34,7 +34,7 @@ lab.suite('scopes', () => {
         expect(result).to.be.an.error();
     });
     
-    lab.test('validateScopes returns false if not all required scopes are met, and the matchAll flag is true', () => {
+    lab.test('validateScopes returns false if not all required scopes are met, and the matchAll flag is true', { plan: 1 }, () => {
         let request = {};
         let result = validateScopes({
             getRequiredScopes: (request) => ['a', 'b', 'c', 'd'],
@@ -44,7 +44,7 @@ lab.suite('scopes', () => {
         expect(result).to.be.an.error();
     });
     
-    lab.test('validateScopes returns false if all required scopes are met, and the matchAll flag is true', () => {
+    lab.test('validateScopes returns false if all required scopes are met, and the matchAll flag is true', { plan: 1 }, () => {
         let request = {};
         let result = validateScopes({
             getRequiredScopes: (request) => ['a', 'b', 'c', 'd'],
