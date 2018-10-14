@@ -11,7 +11,8 @@ exports.users = [
 
 exports.orgs = [
     {id: '148ac505-7144-4b33-87ce-4cf8bccb8861', name: 'ABC Kitchen Co.', settings: {theme: 'light'}},
-    {id: '8afef779-c71b-44c2-a7d1-a89f42f5d500', name: 'DEF Toys Inc.', settings: {theme: 'midnight'}}
+    {id: '8afef779-c71b-44c2-a7d1-a89f42f5d500', name: 'DEF Toys Inc.', settings: {theme: 'midnight'}},
+    {id: 'bfb79125-ac53-4f98-a13a-a3a9628d9011', name: 'Forbidden Fruits LLC', settings: {}} // no members
 ];
 
 exports.user_orgs = [
