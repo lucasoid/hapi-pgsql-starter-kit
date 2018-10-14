@@ -1,0 +1,1321 @@
+{
+	"info": {
+		"_postman_id": "84d106d4-762a-4f39-aeca-c4e47f650785",
+		"name": "hapi-pgsql-starter-kit",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "_pre",
+			"item": [
+				{
+					"name": "(mock) get access_token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f39f71df-6074-4f7b-9190-3e59edd05849",
+								"exec": [
+									"pm.test(\"/mockauth returns a token\", function () {",
+									"    pm.expect(pm.response.json().access_token === undefined).to.be.false;",
+									"});",
+									"pm.environment.set(\"accessToken\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n  \"grant_type\": \"password\",\n  \"username\": \"38b86564-340f-499b-95d2-6a878c61661c\",\n  \"password\": \"yeahright\",\n  \"audience\": \"XXX\",\n  \"client_id\": \"XXX\",\n  \"client_secret\": \"XXX\"\n}"
+						},
+						"url": {
+							"raw": "{{domain}}/mockauth",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"mockauth"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "positive cases",
+			"item": [
+				{
+					"name": "organizations",
+					"item": [
+						{
+							"name": "get organization",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0faa857a-1ccc-4a62-8be0-9f2a41751b5a",
+										"exec": [
+											"var schema = {",
+											"  \"type\": \"object\",",
+											"  \"properties\": {",
+											"      \"id\": { \"type\": \"string\" },",
+											"      \"name\": { \"type\": \"string\" },",
+											"      \"settings\": { \"type\": \"object\"}",
+											"  }",
+											"};",
+											"",
+											"pm.test(\"get_organization status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('get_organization schema is valid', function() {",
+											"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "patch organization",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "df42bc79-78d2-42fa-a824-157f1e969765",
+										"exec": [
+											"var schema = {",
+											"  \"type\": \"object\",",
+											"  \"properties\": {",
+											"      \"id\": { \"type\": \"string\" },",
+											"      \"name\": { \"type\": \"string\" },",
+											"      \"settings\": { \"type\": \"object\"}",
+											"  }",
+											"};",
+											"",
+											"pm.test(\"patch_organization status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('patch_organization schema is valid', function() {",
+											"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"settings\": {\n  \"theme\": \"light\",\n  \"logo\": \"somelogo4.png\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "902c51e6-8de0-4c9b-84ab-e7353a88fd8b",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ec41c806-8a58-408e-bfe0-addadfa3790b",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "products",
+					"item": [
+						{
+							"name": "get products",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0a8276cd-6091-45b5-87b5-46bb7e10dbcc",
+										"exec": [
+											"var schema = {",
+											"  \"items\": {",
+											"    \"type\": \"object\",",
+											"    \"properties\": {",
+											"        \"id\": {\"type\": \"string\"},",
+											"        \"name\": {\"type\": \"string\"},",
+											"        \"description\": {\"type\": [\"string\", \"null\"]},",
+											"        \"cost\": {\"type\": [\"string\", \"null\"]}",
+											"    }",
+											"  }",
+											"};",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Schema is valid', function() {",
+											"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});",
+											"",
+											"pm.environment.set(\"productId\", pm.response.json()[0].id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}/products",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4a6d5704-0c28-48ce-bf23-dd4e534d9211",
+										"exec": [
+											"var schema = {",
+											"    \"type\": \"object\",",
+											"    \"properties\": {",
+											"        \"id\": {\"type\": \"string\"},",
+											"        \"name\": {\"type\": \"string\"},",
+											"        \"description\": {\"type\": [\"string\", \"null\"]},",
+											"        \"cost\": {\"type\": [\"string\", \"null\"]}",
+											"    }",
+											"};",
+											"",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Schema is valid', function() {",
+											"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}/products/{{productId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}",
+										"products",
+										"{{productId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3ec7c13c-55ca-4d2e-9e0a-43513946e905",
+										"exec": [
+											"var schema = {",
+											"    \"type\": \"object\",",
+											"    \"properties\": {",
+											"        \"id\": {\"type\": \"string\"},",
+											"        \"name\": {\"type\": \"string\"},",
+											"        \"description\": {\"type\": [\"string\", \"null\"]},",
+											"        \"cost\": {\"type\": [\"string\", \"null\"]}",
+											"    }",
+											"};",
+											"",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Schema is valid', function() {",
+											"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});",
+											"",
+											"pm.environment.set(\"newProductId\", pm.response.json().id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"plates, plastic\",\n\t\"description\": \"environmental nonstarter\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}/products",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1370633c-be17-49fe-a20b-2fe8024307d3",
+										"exec": [
+											"var schema = {",
+											"    \"type\": \"object\",",
+											"    \"properties\": {",
+											"        \"id\": {\"type\": \"string\"},",
+											"        \"name\": {\"type\": \"string\"},",
+											"        \"description\": {\"type\": [\"string\", \"null\"]},",
+											"        \"cost\": {\"type\": [\"string\", \"null\"]}",
+											"    }",
+											"};",
+											"",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Schema is valid', function() {",
+											"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"cost\": 11.51\n}"
+								},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}/products/{{newProductId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}",
+										"products",
+										"{{newProductId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "eaa4256a-1038-4fad-9b39-4b2756b14fc1",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"deleted count is 1\", function () {",
+											"    pm.expect(pm.response.json().deleted).to.eql(1);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}/products/{{newProductId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}",
+										"products",
+										"{{newProductId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "get users",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f9dbf80f-eac9-45b9-aa3b-403decbd501b",
+										"exec": [
+											"var schema = {",
+											"  \"items\": {",
+											"    \"type\": \"object\",",
+											"    \"properties\": {",
+											"        \"id\": {\"type\": \"string\"},",
+											"        \"firstName\": {\"type\": \"string\"},",
+											"        \"lastName\": {\"type\": \"string\"},",
+											"        \"email\": {\"type\": \"string\"}",
+											"    }",
+											"  }",
+											"};",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Schema is valid', function() {",
+											"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});",
+											"",
+											"pm.environment.set(\"userId\", pm.response.json()[0].id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}/users",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3c9633f1-3919-44fc-b210-b652aa8cae91",
+										"exec": [
+											"var schema = {",
+											"    \"type\": \"object\",",
+											"    \"properties\": {",
+											"        \"id\": {\"type\": \"string\"},",
+											"        \"firstName\": {\"type\": \"string\"},",
+											"        \"lastName\": {\"type\": \"string\"},",
+											"        \"email\": {\"type\": \"string\"}",
+											"    }",
+											"};",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Schema is valid', function() {",
+											"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}/users/{{userId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3f116d33-b89a-487e-8126-01b2e6ffe6a2",
+										"exec": [
+											"var schema = {",
+											"    \"type\": \"object\",",
+											"    \"properties\": {",
+											"        \"id\": {\"type\": \"string\"},",
+											"        \"firstName\": {\"type\": \"string\"},",
+											"        \"lastName\": {\"type\": \"string\"},",
+											"        \"email\": {\"type\": \"string\"}",
+											"    }",
+											"};",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Schema is valid', function() {",
+											"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});",
+											"",
+											"pm.environment.set(\"newUserId\", pm.response.json().id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"firstName\": \"Kate\",\n\t\"lastName\": \"Smith\",\n\t\"email\": \"kate.smith@external.com\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}/users",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"lastName\": \"Smith-Jones\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}/users/{{newUserId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}",
+										"users",
+										"{{newUserId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a2d42ae4-0b2e-4ca5-b475-a726f9dd7ebf",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"pm.test(\"deleted count is 1\", function () {",
+											"    pm.expect(pm.response.json().deleted).to.eql(1);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}/users/{{newUserId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}",
+										"users",
+										"{{newUserId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "negative cases",
+			"item": [
+				{
+					"name": "organizations",
+					"item": [
+						{
+							"name": "get organization - not found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0faa857a-1ccc-4a62-8be0-9f2a41751b5a",
+										"exec": [
+											"pm.test(\"non-existing org ID returns 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations/{{notFoundOrgId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{notFoundOrgId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get organization - unauthorized",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0faa857a-1ccc-4a62-8be0-9f2a41751b5a",
+										"exec": [
+											"pm.test(\"unauthorized org ID returns 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations/{{unauthorizedOrgId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{unauthorizedOrgId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "patch organization - not found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "df42bc79-78d2-42fa-a824-157f1e969765",
+										"exec": [
+											"pm.test(\"patch_organization status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"settings\": {\n  \"theme\": \"light\",\n  \"logo\": \"somelogo4.png\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{domain}}/organizations/{{notFoundOrgId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{notFoundOrgId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "patch organization - unauthorized",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "df42bc79-78d2-42fa-a824-157f1e969765",
+										"exec": [
+											"pm.test(\"patch_organization status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\"settings\": {\n  \"theme\": \"light\",\n  \"logo\": \"somelogo4.png\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{domain}}/organizations/{{unauthorizedOrgId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{unauthorizedOrgId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "902c51e6-8de0-4c9b-84ab-e7353a88fd8b",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ec41c806-8a58-408e-bfe0-addadfa3790b",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "products",
+					"item": [
+						{
+							"name": "get products - not found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0a8276cd-6091-45b5-87b5-46bb7e10dbcc",
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations/{{notFoundOrgId}}/products",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{notFoundOrgId}}",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get products - unauthorized",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0a8276cd-6091-45b5-87b5-46bb7e10dbcc",
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations/{{unauthorizedOrgId}}/products",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{unauthorizedOrgId}}",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get product - org unauthorized",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4a6d5704-0c28-48ce-bf23-dd4e534d9211",
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {",
+											"    pm.response.to.have.status(401);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations/{{unauthorizedOrgId}}/products/{{productId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{unauthorizedOrgId}}",
+										"products",
+										"{{productId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get product - org not found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4a6d5704-0c28-48ce-bf23-dd4e534d9211",
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations/{{notFoundOrgId}}/products/{{productId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{notFoundOrgId}}",
+										"products",
+										"{{productId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get product - not found",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4a6d5704-0c28-48ce-bf23-dd4e534d9211",
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations/{{orgId}}/products/{{notFoundProductId}}",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations",
+										"{{orgId}}",
+										"products",
+										"{{notFoundProductId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "docs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4fde1da6-a915-4a6d-9fe5-345b76c15ab6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var schema = {",
+							"  \"type\": \"object\"",
+							"};",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{domain}}/docs.json",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"docs.json"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
