@@ -10,6 +10,9 @@ const server = Hapi.server({
     debug: {
         request: process.env.NODE_ENV === 'development' ? ['error'] : false,
         log: process.env.NODE_ENV === 'development' ? ['error'] : false
+    },
+    routes: {
+        cors: true
     }
 });
 
