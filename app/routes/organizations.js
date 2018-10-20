@@ -1,4 +1,5 @@
 const Organization = require('../models/Organization');
+const User = require('../models/User');
 const { fetchScopes, validateScopes } = require('../auth/scopes');
 const scopes = require('../constants/scopes');
 const Boom = require('boom');
@@ -55,6 +56,24 @@ exports.routes = {
     name: 'orgs',
     version: '1.0.0',
     register: async (server, options) => {
+        
+        await server.route({
+            method: 'GET',
+            path: "/organizations",
+            config: { 
+                auth: 'jwt',
+            },
+            handler: async (request, h) => {
+                try {
+                    const users = await User.query().select('id').where({id: request.auth.credentials.sub});
+                    return await users[0].$relatedQuery('orgs').select('orgs.id', 'orgs.name');
+                }
+                catch (err) {
+                    request.log(['error', 'routes', 'organizations'], err);
+                    throw err;
+                }
+            }
+        });
 
         await server.route({
             method: 'GET',

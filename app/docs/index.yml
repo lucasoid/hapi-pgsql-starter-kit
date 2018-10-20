@@ -34,6 +34,22 @@ components:
 security:
   - bearerAuth: []
 paths:
+  /organizations:
+    get:
+      description: Get all organizations for a user
+      responses:
+        '200':
+          description: operation successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/organization'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
   /organizations/{organizationId}:
     get:
       description: Retrieve information about an organization

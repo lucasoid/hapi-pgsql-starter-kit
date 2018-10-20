@@ -27,7 +27,7 @@ class User extends Model {
         const Organization = require('./Organization');
         const Role = require('./Role');
         return {
-            org: {
+            orgs: {
                 relation: Model.ManyToManyRelation,
                 modelClass: Organization,
                 join: {
@@ -39,7 +39,8 @@ class User extends Model {
                     to: `${tableNames.ORGS}.id`
                 }
             },
-            role: {
+            
+            roles: {
                 relation: Model.ManyToManyRelation,
                 modelClass: Role,
                 join: {

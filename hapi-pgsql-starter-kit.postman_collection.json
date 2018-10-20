@@ -58,6 +58,68 @@
 					"name": "organizations",
 					"item": [
 						{
+							"name": "get organizations",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0faa857a-1ccc-4a62-8be0-9f2a41751b5a",
+										"exec": [
+											"var schema = {",
+											"  \"type\": \"array\",",
+											"  \"items\": {",
+											"      \"type\": \"object\",",
+											"      \"id\": { \"type\": \"string\" },",
+											"      \"name\": { \"type\": \"string\" }",
+											"  }",
+											"};",
+											"",
+											"pm.test(\"get_organizations status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('get_organizations schema is valid', function() {",
+											"    pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});",
+											"",
+											"pm.test('get_organizations only returns authorized orgs', function() {",
+											"    let containsUnauthorizedOrg = pm.response.json().filter(function (item) {",
+											"        return item.id === pm.environment.get('unauthorizedOrgId');",
+											"    }).length > 0;",
+											"    pm.expect(containsUnauthorizedOrg).to.be.false;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "{{domain}}/organizations",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"organizations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "get organization",
 							"event": [
 								{
