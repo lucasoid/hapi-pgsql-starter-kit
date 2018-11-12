@@ -1,4 +1,4 @@
-description: user
+description: me
 type: object
 required:
   - firstName
@@ -17,3 +17,11 @@ properties:
   email:
     type: string
     example: owholmes@scotus.com
+  orgs:
+    type: array
+    items:
+      $ref: ./organization.yml
+  roles:
+    type: array
+    items:
+      $ref: ./role.yml 

@@ -26,6 +26,8 @@ components:
       $ref: ./schemas/product.yml
     user:
       $ref: ./schemas/user.yml
+    me:
+      $ref: ./schemas/me.yml
   securitySchemes:
     bearerAuth:
       type: http
@@ -281,3 +283,34 @@ paths:
           $ref: '#/components/responses/unauthorized'
         '404':
           $ref: '#/components/responses/notFound'
+  /me:
+    get:
+      description: Retrieve the user's own properties
+      responses:
+        '200':
+          description: operation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/me'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+    patch:
+      description: Update the user's own properties
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        '200':
+          description: operation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'

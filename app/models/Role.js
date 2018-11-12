@@ -11,7 +11,7 @@ class Role extends Model {
     static get jsonSchema() {
         return {
             'type': 'object',
-            'required': ['uuid', 'orgId', 'name'],
+            'required': ['id', 'orgId', 'name'],
             'properties': {
                 'id': {'type': 'string'},
                 'orgId': {'type': 'integer'},

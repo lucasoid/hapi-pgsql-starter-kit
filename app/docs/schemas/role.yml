@@ -1,0 +1,21 @@
+description: role
+type: object
+required:
+  - id
+  - orgId
+  - name
+properties:
+  id:
+    type: string
+    example: 2531329f-fb09-4ef7-887e-84e648214436
+  orgId:
+    type: string
+    example: 2531329f-fb09-4ef7-887e-84e648214436
+  name:
+    type: string
+    example: Admin
+  scopes:
+    type: array
+    items:
+      type: string
+      example: 'products:read'
