@@ -14,6 +14,8 @@ module.exports = async (server) => {
         }
     });
 
+    await server.register(require('./me').routes);
+
     await server.register(require('./docs').routes);
 
     // dev-only plugins

@@ -106,7 +106,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations",
 									"host": [
@@ -161,7 +164,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations/{{orgId}}",
 									"host": [
@@ -314,7 +320,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations/{{orgId}}/products",
 									"host": [
@@ -373,7 +382,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations/{{orgId}}/products/{{productId}}",
 									"host": [
@@ -636,7 +648,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations/{{orgId}}/users",
 									"host": [
@@ -694,7 +709,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations/{{orgId}}/users/{{userId}}",
 									"host": [
@@ -876,6 +894,137 @@
 						}
 					],
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "me",
+					"item": [
+						{
+							"name": "get me",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3c9633f1-3919-44fc-b210-b652aa8cae91",
+										"exec": [
+											"var schema = {",
+											"    \"type\": \"object\",",
+											"    \"properties\": {",
+											"        \"id\": {\"type\": \"string\"},",
+											"        \"firstName\": {\"type\": \"string\"},",
+											"        \"lastName\": {\"type\": \"string\"},",
+											"        \"email\": {\"type\": \"string\"},",
+											"        \"orgs\": {\"type\": \"array\"},",
+											"        \"roles\": {\"type\": \"array\"}",
+											"    }",
+											"};",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Schema is valid', function() {",
+											"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{domain}}/me",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "patch me",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "29d2fc02-f36e-4352-8fa3-780b8abafb34",
+										"exec": [
+											"var schema = {",
+											"    \"type\": \"object\",",
+											"    \"properties\": {",
+											"        \"id\": {\"type\": \"string\"},",
+											"        \"firstName\": {\"type\": \"string\"},",
+											"        \"lastName\": {\"type\": \"string\"},",
+											"        \"email\": {\"type\": \"string\"}",
+											"    }",
+											"};",
+											"",
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test('Schema is valid', function() {",
+											"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"pavan.patel@abc.com\"\n}"
+								},
+								"url": {
+									"raw": "{{domain}}/me",
+									"host": [
+										"{{domain}}"
+									],
+									"path": [
+										"me"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
 				}
 			]
 		},
@@ -914,7 +1063,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations/{{notFoundOrgId}}",
 									"host": [
@@ -957,7 +1109,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations/{{unauthorizedOrgId}}",
 									"host": [
@@ -1130,7 +1285,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations/{{notFoundOrgId}}/products",
 									"host": [
@@ -1174,7 +1332,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations/{{unauthorizedOrgId}}/products",
 									"host": [
@@ -1218,7 +1379,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations/{{unauthorizedOrgId}}/products/{{productId}}",
 									"host": [
@@ -1263,7 +1427,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations/{{notFoundOrgId}}/products/{{productId}}",
 									"host": [
@@ -1308,7 +1475,10 @@
 								},
 								"method": "GET",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
 								"url": {
 									"raw": "{{domain}}/organizations/{{orgId}}/products/{{notFoundProductId}}",
 									"host": [
@@ -1366,7 +1536,10 @@
 				},
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{domain}}/docs.json",
 					"host": [
